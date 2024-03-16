@@ -3,7 +3,7 @@ import Box from '@mui/material/Box'
 function BoardBar() {
   return (
     <Box sx={{
-      backroundColor: 'primary.dark',
+      backgroundColor: 'primary.dark',
       width: '100%',
       height: (theme) => theme.trello.boardBarHeight,
       display: 'flex',
