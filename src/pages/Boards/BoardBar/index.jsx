@@ -18,7 +18,7 @@ const MENU_STYLES = {
   border:'none',
   borderRadius: '4px',
   paddingX: '5px',
-  '& .MuiSvgIcon-root':{
+  '.MuiSvgIcon-root':{
     color:'white'
   },
   '&:hover':{
@@ -44,15 +44,15 @@ function BoardBar() {
         <Chip sx={
           MENU_STYLES
         }
-        icon={<DashboardIcon />} label='DangMinhHuy'/>
+        icon={<DashboardIcon />} label='DangMinhHuy' clickable/>
         <Chip sx={MENU_STYLES}
-          icon={<VpnLockIcon />} label='Public/Private Workspace'/>
+          icon={<VpnLockIcon />} label='Public/Private Workspace' clickable/>
         <Chip sx={MENU_STYLES}
-          icon={<AddToDriveIcon />} label='Add to google drive'/>
+          icon={<AddToDriveIcon />} label='Add to google drive' clickable/>
         <Chip sx={MENU_STYLES}
-          icon={<BoltIcon />} label='Automation'/>
+          icon={<BoltIcon />} label='Automation' clickable/>
         <Chip sx={MENU_STYLES}
-          icon={<FilterListIcon />} label='Filters'/>
+          icon={<FilterListIcon />} label='Filters' clickable/>
       </Box>
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
         <Button variant="outlined"
@@ -68,7 +68,11 @@ function BoardBar() {
             '& .MuiAvatar-root':{
               width:34,
               height:34,
-              fontSize:16
+              fontSize:16,
+              border:'none',
+              color:'white',
+              cursor: 'pointer',
+              '&:first-of-type':{ bgcolor:'#a4b0be'}
             }
           }}
         >
