@@ -16,7 +16,8 @@ function Card({ card }) {
     listeners,
     setNodeRef,
     transform,
-    transition
+    transition,
+    isDragging
   } = useSortable(
     {
       id: card._id,
@@ -26,7 +27,10 @@ function Card({ card }) {
   const dndKitCardStyles = {
     // touchAction: 'none',
     transform: CSS.Translate.toString(transform),
-    transition
+    transition,
+    opacity: isDragging ? 0.5: undefined,
+    border: isDragging ? '1px solid #2ecc71': undefined
+
   }
   const shouldShowCardActions = () => {
     return !!card?.memberIds?.length || !!card?.comments?.length || !!card?.attachments?.length
