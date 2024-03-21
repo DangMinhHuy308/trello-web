@@ -19,7 +19,8 @@ import { DndContext,
 import { arrayMove } from '@dnd-kit/sortable'
 import Column from './ListColumns/Column/Column'
 import Card from './ListColumns/Column/ListCards/Card/Card'
-import { cloneDeep } from 'lodash'
+import { cloneDeep, isEmpty } from 'lodash'
+import { generatePlaceholderCard } from '~/utils/formatters'
 const ACTIVE_DRAG_ITEM_TYPE ={
   COLUMN: 'ACTIVE_DRAG_ITEM_TYPE_COLUMN',
   CARD: 'ACTIVE_DRAG_ITEM_TYPE_CARD'
@@ -84,6 +85,9 @@ function BoardContent({ board }) {
       if (nextActiveColumn) {
         // Xóa card ở column active (column cũ)
         nextActiveColumn.cards = nextActiveColumn.cards.filter(card => card._id !== activeDraggingCardId)
+        if (isEmpty(nextActiveColumn.cards)) {
+          nextActiveColumn.cards = [generatePlaceholderCard(nextActiveColumn)]
+        }
         // cập nhập lại mảng cardOrderIds chuẩn dữ liệu
         nextActiveColumn.cardOrderIds = nextActiveColumn.cards.map(card => card._id)
       }
@@ -96,6 +100,7 @@ function BoardContent({ board }) {
           columnId: nextOverColumn._id
         }
         nextOverColumn.cards = nextOverColumn.cards.toSpliced(newCardIndex, 0, rebuild_activeDraggingCard)
+        nextOverColumn.cards = nextOverColumn.cards.filter(card => !card.FE_PlaceholderCard)
         // cập nhập lại mảng cardOrderIds chuẩn dữ liệu
         nextOverColumn.cardOrderIds = nextOverColumn.cards.map(card => card._id)
 
@@ -156,7 +161,7 @@ function BoardContent({ board }) {
       // activeDraggingCardId: card đang dc kéo
       const { id: activeDraggingCardId, data:{ current: activeDraggingCardData } } = active
       // overCardId: card đang dc tương tác trên or dưới so với card dc kéo ở trên
-      const { id: overCardId } = over
+      const { id: overCardId } = over || {}
       // Tìm 2 cái columns theo cardId
       const activeColumn = findColumnByCardId(activeDraggingCardId)
       const overColumn = findColumnByCardId(overCardId)
@@ -235,15 +240,19 @@ function BoardContent({ board }) {
     }
     // tìm các điểm giao nhau, va chạm với con trỏ
     const pointerIntersections = pointerWithin(args)
+
+    if (!pointerIntersections?.length) return
+
     // thuật toán phát hiện va chạm sẽ trả về 1 mảng va chạm ở đây
-    const intersections = pointerIntersections?.length > 0 ?
-      pointerIntersections : rectIntersection(args)
-      // tìm overId đầu tiên trong intersections ở trên
-    let overId = getFirstCollision(intersections, 'id')
+    // const intersections = pointerIntersections?.length > 0 ?
+    //   pointerIntersections : rectIntersection(args)
+
+    // tìm overId đầu tiên trong pointerIntersections ở trên
+    let overId = getFirstCollision(pointerIntersections, 'id')
     if (overId) {
       const checkColumn = orderedCoulumnsState.find(column => column._id === overId)
       if (checkColumn ) {
-        overId = closestCenter({
+        overId = closestCorners({
           ...args,
           droppableContainers: args.droppableContainers.filter(container => {
             return (container.id !== overId && checkColumn?.cardOrderIds?.includes(container.id))
