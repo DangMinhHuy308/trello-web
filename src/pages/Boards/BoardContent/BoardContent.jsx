@@ -25,7 +25,7 @@ const ACTIVE_DRAG_ITEM_TYPE ={
   CARD: 'ACTIVE_DRAG_ITEM_TYPE_CARD'
 }
 
-function BoardContent({ board }) {
+function BoardContent({ board,createNewColumn,createNewCard,moveColumns }) {
   // const pointerSensor = useSensor(PointerSensor, { activationConstraints: { distance: 10 } })
   // di chuyển ít nhất 10px mới kích hoạt event
   const mouseSensor = useSensor(MouseSensor, { activationConstraints: { distance: 10 } })
@@ -207,12 +207,12 @@ function BoardContent({ board }) {
         // lấy vị trí mới từ over
         const newColumnIndex = orderedCoulumnsState.findIndex(c => c._id === over.id)
 
-        const dndOrderedCoulumnsState =arrayMove(orderedCoulumnsState, oldColumnIndex, newColumnIndex)
-        // clg dùng dữ liệu này sau dùng để xử lý API
-        // const dndOrderedColumnIds = dndOrderedColumnIds.map(c=> c._id)
-        // console.log('dndOrderedCoulumnsState',dndOrderedCoulumnsState)
+        const dndOrderedColumnsState =arrayMove(orderedCoulumnsState, oldColumnIndex, newColumnIndex)
+        // console.log dùng dữ liệu này sau dùng để xử lý API
+        
+        moveColumns(dndOrderedColumnsState)
         // cập nhập state columns ban đầu sau khi kéo thả
-        setOrderedCoulumnsState(dndOrderedCoulumnsState)
+        setOrderedCoulumnsState(dndOrderedColumnsState)
       }
     }
     // những dữ liệu sau khi kéo thả này luôn phải đưa về giá trị mặc định ban đầu
@@ -287,7 +287,11 @@ function BoardContent({ board }) {
         display: 'flex',
         p:'10px 0'
       }}>
-        <ListColumns columns={orderedCoulumnsState}/>
+        <ListColumns 
+          columns={orderedCoulumnsState}
+          createNewColumn={createNewColumn}
+          createNewCard={createNewCard}
+          />
         <DragOverlay dropAnimation={customDropAnimation}>
           {(!activeDragItemType) && null}
           {(activeDragItemType === ACTIVE_DRAG_ITEM_TYPE.COLUMN) && <Column column={activeDragItemData}/>}
