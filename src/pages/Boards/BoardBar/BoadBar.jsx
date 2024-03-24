@@ -25,8 +25,8 @@ const MENU_STYLES = {
     bgcolor:'primary.50'
   }
 }
-function BoardBar( {board}) {
-  
+function BoardBar( { board }) {
+
   return (
     <Box sx={{
       width: '100%',
@@ -37,15 +37,15 @@ function BoardBar( {board}) {
       paddingX: 2,
       gap: 2,
       overflowX: 'auto',
-      bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#33495e': '#1976d2 '),
-      
+      bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#33495e': '#1976d2 ')
+
 
     }}>
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-        <Chip sx={
-          MENU_STYLES
-        }
-        icon={<DashboardIcon />} label={board?.title} clickable/>
+        <Tooltip title={board?.description}>
+          <Chip sx={MENU_STYLES}
+            icon={<DashboardIcon />} label={board?.title} clickable/>
+        </Tooltip>
         <Chip sx={MENU_STYLES}
           icon={<VpnLockIcon />} label={capitalizeFirstLetter(board?.type)} clickable/>
         <Chip sx={MENU_STYLES}
@@ -73,7 +73,7 @@ function BoardBar( {board}) {
               border:'none',
               color:'white',
               cursor: 'pointer',
-              '&:first-of-type':{ bgcolor:'#a4b0be'}
+              '&:first-of-type':{ bgcolor:'#a4b0be' }
             }
           }}
         >
