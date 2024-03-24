@@ -24,7 +24,7 @@ import TextField from '@mui/material/TextField'
 import CloseIcon from '@mui/icons-material/Close'
 import { toast } from 'react-toastify'
 
-function Column({ column }) {
+function Column({ column,createNewCard }) {
   const [anchorEl, setAnchorEl] = useState(null)
   const open = Boolean(anchorEl)
   const handleClick = (event) => {
@@ -35,15 +35,19 @@ function Column({ column }) {
   }
   const orderedCards = mapOrder(column?.cards, column?.cardOrderIds, '_id')
 
-  const [openNewCardForm, setOpenNewCardForm] = useState(true)
+  const [openNewCardForm, setOpenNewCardForm] = useState(false)
   const toggleOpenNewCardForm = () => setOpenNewCardForm(!openNewCardForm)
   const [newCardTitle, setNewCardTitle] = useState('')
-  const addNewCard = () => {
+  const addNewCard = async () => {
     if (!newCardTitle) {
       toast.error('Please enter card title ')
-
       return
     }
+    const newCardData = {
+      title: newCardTitle,
+      columnId: column._id
+    }
+    await createNewCard(newCardData)
     // console.log(newCardTitle)
     // Thêm thẻ mới ở đây
     setOpenNewCardForm() // Đóng trạng thái hiển thị của TextField
