@@ -32,9 +32,9 @@ function BoardContent({ board, createNewColumn, createNewCard, moveColumns, move
   // nhấn giũ 250ms và dung sai của cảm ứng thì mới kích hoạt event
   const touchSensor = useSensor(TouchSensor, { activationConstraints: { delay:250, tolerance: 500 } })
 
-  // const mySensors = useSensors(pointerSensor)
+  // const sensors = useSensors(pointerSensor)
 
-  const mySensors = useSensors(mouseSensor, touchSensor)
+  const sensors = useSensors(mouseSensor, touchSensor)
 
 
   // orderedCoulumnsState === orderedCoulumns
@@ -165,7 +165,10 @@ function BoardContent({ board, createNewColumn, createNewCard, moveColumns, move
     // console.log('handleDragEnd', e)
     const { active, over } = e
     // kiểm tra nếu ko tồn tại over (kéo ra ngoài màn hình thì rt tránh lỗi)
-    if (!active && !over) return
+    if (!active || !over) {
+      // Xử lý hoặc bỏ qua tùy thuộc vào trường hợp cụ thể của bạn
+      return
+    }
     // Xử lý kéo thả cards
     if (activeDragItemType === ACTIVE_DRAG_ITEM_TYPE.CARD) {
       // activeDraggingCardId: card đang dc kéo
@@ -285,7 +288,7 @@ function BoardContent({ board, createNewColumn, createNewCard, moveColumns, move
   return (
     // Box content
     <DndContext
-      sensors={mySensors}
+      sensors={sensors}
       // thuật toán phát hiện va chạm
       // collisionDetection={closestCorners}
       // custom thuật toán phát hiện va chạm
