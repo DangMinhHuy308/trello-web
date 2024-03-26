@@ -83,12 +83,12 @@ function BoardBar( { board }) {
           <Tooltip title='luchanhung'>
             <Avatar alt="luchanhung" src="https://scontent.fsgn21-1.fna.fbcdn.net/v/t1.6435-1/136432846_388752422422853_2437436800060395086_n.jpg?stp=dst-jpg_p200x200&_nc_cat=109&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeF-UlRXyYB_jpkezq9VdvvbOVD0NddUaY85UPQ111Rpj3AxF5n8wWGm2imYf7hf8aqo09-vo46DeNBYihJOjZjq&_nc_ohc=gmUdsftPnEkAX8H59J5&_nc_ht=scontent.fsgn21-1.fna&oh=00_AfAxk0HOqEWixYTlyaMzgnveAcyO24wqvVLRjIq46DKmug&oe=661DDEE6" />
           </Tooltip>
-          <Tooltip title='luchanhung'>
+          {/* <Tooltip title='luchanhung'>
             <Avatar alt="luchanhung" src="https://scontent.fsgn21-1.fna.fbcdn.net/v/t39.30808-6/277304189_3086337908362553_499339562608316562_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeHc5MzklsPtW_05kWqpy23r1FKeEbfiF6zUUp4Rt-IXrLaKO7qM4S65ss5SOPAyJBZdqslurO4A8uXfJ9iMkEvg&_nc_ohc=q7yYYk8TuIsAX8lBcec&_nc_ht=scontent.fsgn21-1.fna&oh=00_AfCo99uKATfAa802b4bM8DuTaiucFW4KTgM7FhOYrdNTlw&oe=65FAD075" />
           </Tooltip>
           <Tooltip title='luchanhung'>
             <Avatar alt="luchanhung" src="https://scontent.fsgn21-1.fna.fbcdn.net/v/t39.30808-6/415775443_1076848783763444_912400440701530613_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeHDMN02yJCCBAZ9LpY_hlFHNgFEz5xsaxE2AUTPnGxrEQ7rrd3GB41JDT0FHHCIMjtGZau2CriEBpzM5GXRddIu&_nc_ohc=5xdk-4tKwP8AX9ORAIW&_nc_ht=scontent.fsgn21-1.fna&oh=00_AfBYhj2W2j6EdVNPAAeGAwwcBb29QnFlyqEV1enHBpP6GQ&oe=65FB47DB" />
-          </Tooltip>
+          </Tooltip> */}
         </AvatarGroup>
       </Box>
     </Box>
