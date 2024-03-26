@@ -60,7 +60,7 @@ function Board() {
       ...newCardData,
       boardId: board._id
     })
-    console.log('createdCard', createdCard)
+    // console.log('createdCard', createdCard)
     // cập nhập state board
     const newBoard = { ...board }
     const columnToUpdate = newBoard.columns.find(column => column._id === createdCard.columnId)

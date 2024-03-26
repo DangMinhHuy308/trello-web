@@ -37,8 +37,9 @@ function Column({ column, createNewCard }) {
   const orderedCards = column.cards
 
   const [openNewCardForm, setOpenNewCardForm] = useState(false)
-  const toggleOpenNewCardForm = () => setOpenNewCardForm(!openNewCardForm)
+  const toggleOpenNewCardForm = () => {setOpenNewCardForm(!openNewCardForm)}
   const [newCardTitle, setNewCardTitle] = useState('')
+  
   const addNewCard = () => {
     if (!newCardTitle) {
       toast.error('Please enter card title ')
@@ -67,7 +68,10 @@ function Column({ column, createNewCard }) {
       id: column._id,
       data:{ ...column }
     })
-
+    function myFunction() {
+      console.log('Button Clicked!');
+      // Thêm code xử lý khác tại đây
+    }
   const dndKitColumnStyles = {
     // touchAction: 'none',
     transform: CSS.Translate.toString(transform),
@@ -101,7 +105,7 @@ function Column({ column, createNewCard }) {
           justifyContent:'space-between'
         }}
         >
-          <Typography variant='h6' sx={{ fontWeight:'bold', cursor:'pointer', fontSize:'1rem' }}>{column?.title}</Typography>
+          <Typography variant='h6' sx={{ fontWeight:'bold', cursor:'pointer', fontSize:'1rem',  }}>{column?.title}</Typography>
           <Box>
             <div>
               <Tooltip title='More option'>
@@ -115,6 +119,7 @@ function Column({ column, createNewCard }) {
                 />
               </Tooltip>
               <Menu
+                
                 id="basic-menu-column-dropdown"
                 anchorEl={anchorEl}
                 open={open}
@@ -127,7 +132,7 @@ function Column({ column, createNewCard }) {
                   <ListItemIcon>
                     <AddCardIcon fontSize="small" />
                   </ListItemIcon>
-                  <ListItemText>Add new cart</ListItemText>
+                  <ListItemText>Add new card</ListItemText>
                 </MenuItem>
                 <MenuItem>
                   <ListItemIcon>
@@ -181,7 +186,7 @@ function Column({ column, createNewCard }) {
               alignItems:'center',
               justifyContent:'space-between'
             }}>
-              <Button onClick={toggleOpenNewCardForm} startIcon={<AddCardIcon/>}>Add new cart</Button>
+              <Button onClick={myFunction()} startIcon={<AddCardIcon/>}>Add new card</Button>
               <Tooltip title='Drag to move'>
                 <DragHandleIcon sx={{ cursor:'pointer' }}/>
               </Tooltip>
