@@ -8,22 +8,22 @@ import { toast } from 'react-toastify'
 import TextField from '@mui/material/TextField'
 import CloseIcon from '@mui/icons-material/Close'
 
-function ListColumns({ columns,createNewColumn,createNewCard }) {
+function ListColumns({ columns, createNewColumn, createNewCard, deleteColumnDetails }) {
   const [openNewColumnForm, setOpenNewColumnForm] = useState(false)
   const toggleOpenNewColumnForm = () => setOpenNewColumnForm(!openNewColumnForm)
   const [newColumnTitle, setNewColumnTitle] = useState('')
-  const addNewColumn =  () => {
+  const addNewColumn = () => {
     if (!newColumnTitle) {
       toast.error('Please enter title ')
       return
     }
     const newColumnData = {
-      title: newColumnTitle,
+      title: newColumnTitle
     }
     createNewColumn(newColumnData)
     // gọi api ở đây
-    // đóng trạng thái thêm 
-    toggleOpenNewColumnForm() 
+    // đóng trạng thái thêm
+    toggleOpenNewColumnForm()
     setNewColumnTitle('')
   }
   return (
@@ -40,7 +40,12 @@ function ListColumns({ columns,createNewColumn,createNewCard }) {
         }
       }}>
         {columns?.map((column) => {
-          return <Column key={column._id} column={column} createNewCard={createNewCard}/>
+          return <Column
+            key={column._id}
+            column={column}
+            createNewCard={createNewCard}
+            deleteColumnDetails={deleteColumnDetails}
+          />
         })}
         {!openNewColumnForm
 
@@ -104,7 +109,7 @@ function ListColumns({ columns,createNewColumn,createNewCard }) {
               }}
 
             />
-            <Box sx={{ display:'flex', alignItems:'center',gap:1 }}>
+            <Box sx={{ display:'flex', alignItems:'center', gap:1 }}>
               <Button
                 onClick={addNewColumn}
                 variant='contained'

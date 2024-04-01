@@ -6,13 +6,22 @@ import BoardBar from './BoardBar/BoadBar'
 import BoardContent from './BoardContent/BoardContent'
 import { mockData } from '~/apis/mock.data'
 import { useEffect, useState } from 'react'
-import { fetchBoardDetailsAPI, createNewColumnAPI, createNewCardAPI, updateBoardDetailsAPI, updateColumnDetailsAPI, moveCardToDifferentColumnAPI } from '~/apis'
+import {
+  fetchBoardDetailsAPI,
+  createNewColumnAPI,
+  createNewCardAPI,
+  updateBoardDetailsAPI,
+  updateColumnDetailsAPI,
+  moveCardToDifferentColumnAPI,
+  deleteColumnDetailsAPI
+} from '~/apis'
 import { generatePlaceholderCard } from '~/utils/formatters'
 import { isEmpty } from 'lodash'
 import { mapOrder } from '~/utils/sorts'
 import Box from '@mui/material/Box'
 import CircularProgress from '@mui/material/CircularProgress'
 import { Typography } from '@mui/material'
+import { toast } from 'react-toastify'
 
 function Board() {
   const [board, setBoard] = useState(null)
@@ -77,6 +86,20 @@ function Board() {
 
     }
   }
+  // xử lý xóa 1 column và card
+  const deleteColumnDetails = (columnId) => {
+    // update chuẩn dữ liệu cho state board
+    const newBoard = { ...board }
+    newBoard.columns = newBoard.columns.filter(c => c._id !== columnId)
+    newBoard.columnOrderIds = newBoard.columnOrderIds.filter(_id => _id !== columnId)
+    setBoard(newBoard)
+    // gọi api xử lý phía BE
+    deleteColumnDetailsAPI(columnId)
+      .then(res => {
+        toast.success(res?.deleteResult)
+        console.log('res', res)
+      })
+  }
   // func này gọi API và xử lý khi kéo thả column
   const moveColumns = (dndOrderedColumnsState) => {
     //  cập nhập cho chuẩn dữ liệu state board
@@ -123,6 +146,7 @@ function Board() {
       nextCardOrderIds: dndOrderedColumnsState.find(c => c._id === nextColumnId)?.cardOrderIds
     })
   }
+  
   if (!board) {
     return (
       <Box sx={{
@@ -149,7 +173,7 @@ function Board() {
         moveColumns={moveColumns}
         moveCardInTheSameColumn={moveCardInTheSameColumn}
         moveCardToDifferentColumn={moveCardToDifferentColumn}
-
+        deleteColumnDetails={deleteColumnDetails}
       />
 
     </Container>
